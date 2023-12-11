@@ -1,0 +1,85 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: configure
+      run: ./configure
+    - name: make
+      run: make
+    - name: make check
+      run: make check
+    - name: make distcheck
+      run: make distcheck
+#define _CRT_SECURE_NO_WARNINGS
+/*
+Duy Mai
+12/10/2023
+Today we are going to code out final project setting up Arrays and Sorting according to their last name
+in alphabetical order for the second part we added */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define MAX_PERSONS 20
+// Structure definition for a person
+struct Person {
+    char firstName[50];
+    char lastName[50];
+    int age;
+};
+
+// Function to compare Persons based on their age
+int comparePersons(const void* a, const void* b);
+
+
+int main() {
+
+    // Array of structures
+    struct Person people[MAX_PERSONS];
+    const char STOP_INPUT[] = "stop";
+    int numPeople = 0;
+    // Input data
+    while (numPeople < MAX_PERSONS) {
+        printf("Last Name: ");
+        scanf("%s", names[numPeople]);
+
+        // Check for the sentinel value to stop input
+        if (strcmp(names[numPeople], "stop") == 0) {
+            break;
+        }
+
+        printf("First Name: ");
+        scanf("%s", names[numPeople] + MAX_NAME_LENGTH);
+
+        printf("Age: ");
+        scanf("%d", &ages[numPeople]);
+
+        numPeople++;
+    }
+
+    // Sort the array of structures based on age
+    qsort(people, MAX_PERSONS, sizeof(struct Person), comparePersons);
+
+    // Print the sorted results
+    printf("\nSorted Results:\n");
+    for (int i = 0; i < MAX_PERSONS; ++i) {
+        printf("Person %d: %s %s, Age: %d\n", i + 1, people[i].firstName, people[i].lastName, people[i].age);
+    }
+
+    return 0;
+}
+int comparePersons(const void* a, const void* b) {
+    return ((struct Person*)a)->age - ((struct Person*)b)->age;
+}
